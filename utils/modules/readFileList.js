@@ -6,13 +6,17 @@ const path = require('path');
 const chalk = require('chalk');
 const docsRoot = path.join(__dirname, '..', '..', 'docs');
 
-function readFileList(dir = docsRoot, filesList = []) {
+function readFileList(dir = docsRoot, filesList = [], visited = new Set()) {
+  const realDir = fs.realpathSync(dir);
+  if (visited.has(realDir)) return filesList;
+  visited.add(realDir);
+
   const files = fs.readdirSync(dir);
   files.forEach( (item, index) => {
       let filePath = path.join(dir, item);
       const stat = fs.statSync(filePath);
       if (stat.isDirectory() && item !== '.vuepress') {
-        readFileList(path.join(dir, item), filesList);  //递归读取文件
+        readFileList(path.join(dir, item), filesList, visited);  //递归读取文件
       } else {
         if(path.basename(dir) !== 'docs'){ // 过滤docs目录级下的文件
 

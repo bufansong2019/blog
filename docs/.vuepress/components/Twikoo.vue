@@ -47,7 +47,7 @@ export default {
   },
   beforeDestroy() {
     // 清空容器，防止 SPA 切换时残留
-    const el = this.$refs.container || document.getElementById('tcomment');
+    const el = document.getElementById('tcomment');
     if (el) el.innerHTML = '';
   },
   methods: {

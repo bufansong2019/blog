@@ -4,7 +4,6 @@
 const fs = require('fs'); // 文件模块
 const path = require('path'); // 路径模块
 const matter = require('gray-matter'); // front matter解析器 https://github.com/jonschlinkert/gray-matter
-const jsonToYaml = require('json2yaml')
 const yamlToJs = require('yamljs')
 const inquirer = require('inquirer') // 命令行操作
 const chalk = require('chalk') // 命令行打印美化
@@ -83,7 +82,7 @@ async function main() {
       if(matterData.date && type(matterData.date) === 'date') {
         matterData.date = repairDate(matterData.date) // 修复时间格式
       }
-      const newData = jsonToYaml.stringify(matterData).replace(/\n\s{2}/g,"\n").replace(/"/g,"")  + '---\r\n' + fileMatterObj.content;
+      const newData = matter.stringify(fileMatterObj.content, matterData);
       fs.writeFileSync(file.filePath, newData); // 写入
       log(chalk.green(`update frontmatter：${file.filePath} `))
     }

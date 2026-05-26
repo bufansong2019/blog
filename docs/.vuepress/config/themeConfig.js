@@ -1,12 +1,11 @@
 const nav = require('./themeConfig/nav.js');
-// const sidebar = require('./themeConfig/sidebar.js');
 
 // 主题配置
 module.exports = {
   nav, // 顶部导航栏
   sidebarDepth: 2, // 侧边栏显示深度，默认1，最大2（显示到h3标题）
   logo: '/img/logo.png', // 导航栏logo
-  repo: 'bufansong2019/bufansong2019.github.io', // 导航栏右侧生成Github链接
+  repo: 'bufansong2019/blog', // 导航栏右侧生成Github链接
   searchMaxSuggestions: 10, // 搜索结果显示最大数
   lastUpdated: '上次更新', // 开启更新时间，并配置前缀文字   string | boolean (取值为git提交时间)
   editLinks: false, // 启用编辑链接
@@ -16,7 +15,6 @@ module.exports = {
   searchPlaceholder: '按下 𝑺 搜索', // 可选：搜索栏占位文本，默认："$ grep ..."
 
   //*** 以下配置是Vdoing主题改动和新增的配置 ***//
-
   category: false, // 是否打开分类功能，默认true
   tag: false, // 是否打开标签功能，默认true
   // archive: false, // 是否打开归档功能，默认true
@@ -68,6 +66,6 @@ module.exports = {
   footer: {
     // 页脚信息
     createYear: 2026, // 博客创建年份
-    copyrightInfo: '鱼行二进制 | By bufansong | <a href="https://github.com/bufansong2019/bufansong2019.github.io/blob/main/LICENSE" target="_blank">MIT License</a>'
+    copyrightInfo: '鱼行二进制 | By bufansong | <a href="https://github.com/bufansong2019/blog/blob/main/LICENSE" target="_blank">MIT License</a>'
   }
 };
