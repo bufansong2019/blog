@@ -1,0 +1,81 @@
+/* ==============================
+   搜索结果样式
+============================== */
+.suggestions {
+  max-height: 80vh;
+  overflow-y: auto; /* 比 scroll 更优：无内容时不显示滚动条 */
+}
+.suggestions .highlight {
+  color: #646cff;
+  font-weight: 700;
+}
+
+/* ==============================
+   图片默认居中
+============================== */
+.theme-vdoing-content:not(.custom) img {
+  display: block;
+  margin: 0 auto;
+}
+
+/* ==============================
+   霞鹜文楷屏幕字体
+============================== */
+@import url('https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css');
+
+/* 全局字体：一劳永逸覆盖所有元素，代码和图标除外 */
+body, body * {
+  font-family: "LXGW WenKai Screen", sans-serif !important;
+}
+
+/* 代码块保持等宽 */
+pre, code,
+pre *, code * {
+  font-family: Consolas, Menlo, monospace !important;
+}
+
+/* 图标元素文字使用全局字体（特异性盖过主题的 .iconfont 规则） */
+body .iconfont,
+body [class^="icon-"] {
+  font-family: "LXGW WenKai Screen", sans-serif !important;
+}
+
+/* 图标字体：仅作用于伪元素 */
+.iconfont::before,
+.iconfont::after,
+[class^="icon-"]::before,
+[class^="icon-"]::after {
+  font-family: "iconfont" !important;
+}
+
+/* ==============================
+   布局间距优化
+============================== */
+/* 隐藏首页底部空白占位块 */
+.custom.card-box.content__default {
+  display: none !important;
+}
+
+/* 页脚间距 + 固定 */
+.footer {
+  margin-top: 15px !important;
+  padding-top: 15px !important;
+  position: relative !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 auto !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* 文章页底部收紧间距 */
+.page .theme-vdoing-wrapper,
+.page {
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+}
+.page {
+  padding-bottom: 10px !important;
+}

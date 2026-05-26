@@ -1,0 +1,13 @@
+node_modules
+
+# npm
+# package-lock.json
+
+# vuepress
+docs/.vuepress/dist
+
+# 百度链接推送
+urls.txt
+
+# Claude Code
+startClaude.bat
