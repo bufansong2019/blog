@@ -5,7 +5,7 @@
     "dev": "vuepress dev docs",
     "build": "vuepress build docs",
     "editFm": "node utils/editFrontmatter.js",
-    "baiduPush": "node utils/baiduPush.js https://blog.f1sh.org"
+    "baiduPush": "node utils/baiduPush.js https://bufansong2019.github.io"
   },
   "license": "MIT",
   "devDependencies": {

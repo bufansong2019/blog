@@ -3,11 +3,18 @@ node_modules
 # npm
 # package-lock.json
 
+# yarn
+yarn.lock
+
+# vscode
+.vscode
+
 # vuepress
 docs/.vuepress/dist
 
 # 百度链接推送
 urls.txt
 
-# Claude Code
-startClaude.bat
+# mac
+.DS_Store
+yarn-error.log
