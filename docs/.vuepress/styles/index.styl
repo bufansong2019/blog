@@ -18,26 +18,21 @@
   margin: 0 auto;
 }
 
-/* ==============================
-   霞鹜文楷屏幕字体
-============================== */
-@import url('https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css');
-
 /* 全局字体：一劳永逸覆盖所有元素，代码和图标除外 */
 body, body * {
-  font-family: "LXGW WenKai Screen", sans-serif !important;
+  font-family: "LXGW WenKai Screen", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif !important;
 }
 
 /* 代码块保持等宽 */
 pre, code,
 pre *, code * {
-  font-family: Consolas, Menlo, monospace !important;
+  font-family: "LXGW WenKai Mono", "LXGW WenKai Screen", Menlo, Consolas, monospace !important;
 }
 
 /* 图标元素文字使用全局字体（特异性盖过主题的 .iconfont 规则） */
 body .iconfont,
 body [class^="icon-"] {
-  font-family: "LXGW WenKai Screen", sans-serif !important;
+  font-family: "LXGW WenKai Screen", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif !important;
 }
 
 /* 图标字体：仅作用于伪元素 */
@@ -71,11 +66,11 @@ body [class^="icon-"] {
 }
 
 /* 文章页底部收紧间距 */
-.page .theme-vdoing-wrapper,
-.page {
+.page .theme-vdoing-wrapper {
   padding-bottom: 0 !important;
   margin-bottom: 0 !important;
 }
 .page {
   padding-bottom: 10px !important;
 }
+

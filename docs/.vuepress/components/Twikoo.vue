@@ -19,7 +19,7 @@ function loadTwikooScript() {
     const script = document.createElement('script');
     script.src = SCRIPT_URL;
     script.onload = () => resolve();
-    script.onerror = () => resolve(); // 静默失败，loading 保持显示
+    script.onerror = () => resolve();
     document.head.appendChild(script);
   });
   return scriptPromise;
@@ -46,18 +46,28 @@ export default {
     this.initTwikoo();
   },
   beforeDestroy() {
-    // 清空容器，防止 SPA 切换时残留
     const el = document.getElementById('tcomment');
     if (el) el.innerHTML = '';
   },
   methods: {
     async initTwikoo() {
-      // 确保 DOM 已渲染
       await this.$nextTick();
-      // 确保 twikoo 脚本已加载（全局只加载一次）
+
+      let inited = false;
+      const timeout = setTimeout(() => {
+        if (!inited) {
+          this.loading = false;
+          const el = document.getElementById('tcomment');
+          if (el) el.innerHTML = '<p style="text-align:center;color:var(--textColor);padding:2rem;opacity:0.6">评论加载失败，请刷新重试</p>';
+        }
+      }, 8000);
+
       await loadTwikooScript();
 
       if (typeof window === 'undefined' || !window.twikoo) return;
+
+      inited = true;
+      clearTimeout(timeout);
 
       const commentPath = this.path || window.location.pathname.replace(/\/$/, '');
 
@@ -67,6 +77,48 @@ export default {
         path: commentPath,
         lang: 'zh-CN'
       });
+
+      // 延迟注入主题色样式，确保 Twikoo 的 Element UI CSS 已加载
+      setTimeout(() => {
+        if (document.getElementById('twikoo-theme-style')) return;
+        const style = document.createElement('style');
+        style.id = 'twikoo-theme-style';
+        style.textContent = `
+          .twikoo-comments .el-button {
+            color: #11a8cd !important;
+            border-color: #11a8cd !important;
+            background-color: transparent !important;
+          }
+          .twikoo-comments .el-button--primary {
+            background-color: #11a8cd !important;
+            color: #fff !important;
+          }
+          .twikoo-comments .el-button:hover,
+          .twikoo-comments .el-button:focus {
+            background-color: #11a8cd !important;
+            color: #fff !important;
+            opacity: 0.85;
+          }
+          .twikoo-comments svg,
+          .twikoo-comments i,
+          .twikoo-comments .el-icon {
+            color: #11a8cd !important;
+          }
+          .twikoo-comments .el-input__inner:focus,
+          .twikoo-comments .el-textarea__inner:focus {
+            border-color: #11a8cd !important;
+          }
+          .twikoo-comments a {
+            color: #11a8cd !important;
+          }
+          .twikoo-comments .el-checkbox__input.is-checked .el-checkbox__inner,
+          .twikoo-comments .el-checkbox__input.is-indeterminate .el-checkbox__inner {
+            background-color: #11a8cd !important;
+            border-color: #11a8cd !important;
+          }
+        `;
+        document.head.appendChild(style);
+      }, 300);
 
       this.loading = false;
     }

@@ -6,6 +6,10 @@ module.exports = [
   ['meta', { name: 'baidu-site-verification', content: 'codeva-XqpfgmSRwP' }], // 百度站长验证
   ['meta', { name: 'theme-color', content: '#11a8cd' }],
   ['meta', { name: 'referrer', content: 'no-referrer-when-downgrade' }],
+  // 霞鹜文楷字体 - 异步加载不阻塞渲染
+  ['link', { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.6.0/style.css', media: 'print', onload: "this.media='all'" }],
+  ['link', { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.6.0/style.css', media: 'print', onload: "this.media='all'" }],
+  ['noscript', {}, '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.6.0/style.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.6.0/style.css">'],
   // 百度统计
   ['script', {}, `
     var _hmt = _hmt || [];
