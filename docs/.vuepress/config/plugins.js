@@ -36,14 +36,11 @@ module.exports = [
     }
   ],
 
-  // RSS 订阅
-  [
-    'rss',
-    {
-      site_url: 'https://blog.f1sh.org',
-      copyright: '鱼行二进制 | By bufansong | MIT License'
-    }
-  ],
+  // RSS 订阅（手写插件，零外部依赖）
+  [require('./plugins/rss'), {
+    site_url: 'https://blog.f1sh.org',
+    copyright: '鱼行二进制 | By bufansong | MIT License'
+  }],
 
   // 站点地图（手写插件，零外部依赖）
   [require('./plugins/sitemap'), { hostname: 'https://blog.f1sh.org' }]
