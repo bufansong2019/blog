@@ -1,8 +1,5 @@
 // 插件配置
 module.exports = [
-  // 全文搜索插件
-  'fulltext-search',
-
   // 代码块复制按钮
   [
     'one-click-copy',
@@ -16,11 +13,11 @@ module.exports = [
 
   // 图片放大插件
   [
-    'vuepress-plugin-zooming',
+    '@vuepress/medium-zoom',
     {
       selector: '.theme-vdoing-content img:not(.no-zoom)',
       options: {
-        bgColor: 'rgba(0,0,0,0.6)'
+        background: 'rgba(0,0,0,0.6)'
       }
     }
   ],

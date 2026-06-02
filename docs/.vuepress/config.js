@@ -1,3 +1,4 @@
+const path = require('path');
 const head = require('./config/head.js');
 const plugins = require('./config/plugins.js');
 const themeConfig = require('./config/themeConfig.js');
@@ -13,5 +14,8 @@ module.exports = {
 
   head,
   plugins,
-  themeConfig
+  themeConfig,
+  chainWebpack: (config) => {
+    config.resolve.alias.set('@AlgoliaSearchBox', path.resolve(__dirname, 'components/AlgoliaSearchBox.vue'))
+  }
 };

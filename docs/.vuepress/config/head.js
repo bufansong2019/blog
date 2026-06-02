@@ -5,6 +5,9 @@ module.exports = [
   ['meta', { name: 'keywords', content: '卜凡松,鱼行二进制' }],
   ['meta', { name: 'baidu-site-verification', content: 'codeva-XqpfgmSRwP' }], // 百度站长验证
   ['meta', { name: 'algolia-site-verification', content: '256C26140F7ACCC1' }], // Algolia 搜索验证
+  // Algolia DocSearch v3
+  ['link', { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/@docsearch/css@3' }],
+  ['script', { src: 'https://cdn.jsdelivr.net/npm/@docsearch/js@3', defer: true }],
   ['meta', { name: 'theme-color', content: '#11a8cd' }],
   ['meta', { name: 'referrer', content: 'no-referrer-when-downgrade' }],
   // 霞鹜文楷字体 - 异步加载不阻塞渲染
@@ -21,6 +24,4 @@ module.exports = [
       s.parentNode.insertBefore(hm, s);
     })();
   `],
-  // 搜索框添加快捷键
-  ['script', { language: 'javascript', type: 'text/javascript', src: '/js/pgmanor-self.js' }]
 ];
