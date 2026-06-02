@@ -23,6 +23,8 @@ export default {
     body.DocSearch--active { margin-right: 0 !important; overflow: visible !important; }
     .DocSearch-Hit a { background: var(--docsearch-hit-background) !important; }
     .DocSearch-Hit[aria-selected=true] a { background: ${themeColor} !important; }
+    .DocSearch-Button { animation: docsearchFadeIn .4s ease both; }
+    @keyframes docsearchFadeIn { from { opacity: 0; transform: translateY(-2px); } to { opacity: 1; transform: translateY(0); } }
     `
     document.head.appendChild(style)
 
