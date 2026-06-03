@@ -56,6 +56,127 @@ body [class^="icon-"] {
   padding-right: 0 !important;
 }
 
+/* 页脚颜色随主题模式自适应（覆盖主题硬编码的 #666） */
+.footer { color: var(--textColor) !important; }
+.footer a { color: var(--textColor) !important; }
+.footer a:hover { color: $accentColor !important; }
+
+/* ==============================
+   三个主题模式的全局修补
+   说明：Vdoing 主题大量使用硬编码颜色（如 #888/#999），
+   只在浅色模式下表现好。以下规则覆盖主题默认样式，
+   确保深色/阅读模式下文字、背景、边框都有正确的对比度。
+
+   如果以后升级 vuepress-theme-vdoing，这些覆盖仍有效，
+   因为全部写在我们的 index.styl 中，不会丢失。
+============================== */
+
+/* 深色模式滚动条可见（原 rgba(0,0,0,.15/.28) 在黑背景上不可见） */
+.theme-mode-dark ::-webkit-scrollbar-track-piece {
+  background-color: rgba(255,255,255,.08) !important;
+}
+.theme-mode-dark ::-webkit-scrollbar-thumb:vertical,
+.theme-mode-dark ::-webkit-scrollbar-thumb:horizontal {
+  background-color: rgba(255,255,255,.2) !important;
+}
+
+/* 分类/标签页（CategoriesPage / TagsPage）滚动条同上 */
+.theme-mode-dark .categories-page ::-webkit-scrollbar-track-piece,
+.theme-mode-dark .tags-page ::-webkit-scrollbar-track-piece {
+  background-color: rgba(255,255,255,.08) !important;
+}
+.theme-mode-dark .categories-page ::-webkit-scrollbar-thumb:vertical,
+.theme-mode-dark .tags-page ::-webkit-scrollbar-thumb:vertical {
+  background-color: rgba(255,255,255,.2) !important;
+}
+
+/* ArticleInfo 面包屑/作者/日期颜色（覆盖主题硬编码 #888/#999） */
+.articleInfo-wrap,
+.articleInfo-wrap .breadcrumbs li a,
+.articleInfo-wrap .info div a {
+  color: var(--textColor) !important;
+}
+.articleInfo-wrap .breadcrumbs li:after {
+  color: var(--textColor) !important;
+  opacity: .5;
+}
+
+/* PageEdit 底部编辑链接/标签/更新时间颜色 */
+.page-edit .edit-link a {
+  color: var(--textColor) !important;
+}
+.page-edit .last-updated .prefix,
+.page-edit .last-updated .time {
+  color: var(--textColor) !important;
+  opacity: .6;
+}
+.page-edit .tag {
+  background: var(--customBlockBg) !important;
+}
+
+/* PageNav 上下篇文章导航 hover 背景 + 箭头颜色 */
+.page-nav .inner a,
+.page-nav .prev a,
+.page-nav .next a {
+  color: var(--textColor) !important;
+}
+.page-nav .inner a:hover,
+.page-nav .prev a:hover,
+.page-nav .next a:hover {
+  background: var(--customBlockBg) !important;
+}
+.page-nav .next {
+  color: var(--textColor) !important;
+}
+
+/* 首页更新列表日期颜色（覆盖 #999） */
+.update-article .time {
+  color: var(--textColor) !important;
+  opacity: .6;
+}
+
+/* 侧边栏汉堡按钮图标颜色 */
+.sidebar-button .icon-wrap span {
+  background: var(--textColor) !important;
+}
+
+/* 阅读模式：custom-blocks 提示框背景适配
+   （原浅色背景如 #f3f5f7 / #FFF7D0 在阅读模式的
+     奶油底色上混成一团，无法区分） */
+.theme-mode-read .custom-block.tip {
+  background-color: rgba(243,245,247,.4) !important;
+}
+.theme-mode-read .custom-block.warning {
+  background-color: rgba(255,247,208,.4) !important;
+}
+.theme-mode-read .custom-block.danger {
+  background-color: rgba(255,230,230,.5) !important;
+}
+.theme-mode-read .custom-block.note {
+  background-color: rgba(232,245,250,.5) !important;
+}
+
+/* 阅读模式：卡片容器边框适配（原 rgba(0,0,0,0.1) 在奶油底色上太淡） */
+.theme-mode-read .card-list .card-item {
+  border-color: var(--borderColor) !important;
+}
+.theme-mode-read .cardImgListContainer .card-list .card-item {
+  border-color: var(--borderColor) !important;
+}
+.theme-mode-read .cardImgListContainer .box-footer {
+  border-color: var(--borderColor) !important;
+}
+
+/* 阅读模式：文章背景纹路颜色（原 rgba(50,0,0,0.05) 偏红，在暖色背景上不协调） */
+.theme-mode-read .theme-vdoing-wrapper {
+  --linesColor: rgba(125,100,50,.06);
+}
+
+/* 阅读模式：代码块高亮行背景（原 rgba(200,200,200,40%) 在深色代码背景上不可见） */
+.theme-mode-read div[class*="language-"] .highlight-lines .highlighted {
+  background-color: rgba(255,255,255,.1) !important;
+}
+
 /* 文章页底部收紧间距 */
 .page .theme-vdoing-wrapper {
   padding-bottom: 0 !important;
@@ -64,4 +185,3 @@ body [class^="icon-"] {
 .page {
   padding-bottom: 10px !important;
 }
-

@@ -9,26 +9,64 @@ export default {
   props: ['options'],
 
   mounted() {
-    // 恢复 DocSearch 内部 flex 布局：Vdoing 的 .navbar span 冲掉了 display:flex
+    // Vdoing 的 .navbar span 冲掉了 DocSearch 内部 flex 布局，动态注入 style 覆盖主题默认样式
     const style = document.createElement('style')
     const themeColor = '#11A8CD'
     style.textContent = `
     :root { --docsearch-primary-color: ${themeColor}; }
-    .DocSearch-Button-Container, .DocSearch-Button-Keys { display: flex !important; }
+
+    /*--- 按钮区域适配三个主题模式 ---*/
     .DocSearch-Button { padding: 0 2px 0 14px !important; }
-    .DocSearch-Button:focus, .DocSearch-Button:hover { box-shadow: 0 0 0 1px ${themeColor} !important; }
+    .theme-mode-dark .DocSearch-Button { background: rgba(60,60,70,.85) !important; }
+    .theme-mode-read .DocSearch-Button { background: rgba(225,225,190,.85) !important; }
+
+    /*--- 深色模式弹窗变量 ---*/
+    .theme-mode-dark {
+      --docsearch-container-background: rgba(0,0,0,.7);
+      --docsearch-modal-background: rgb(39,39,43);
+      --docsearch-hit-background: rgba(30,30,34,.8);
+      --docsearch-hit-shadow: none;
+      --docsearch-footer-background: rgb(39,39,43);
+      --docsearch-text-color: rgb(155,155,170);
+      --docsearch-muted-color: rgb(120,120,140);
+      --docsearch-searchbox-background: rgba(30,30,34,.8);
+      --docsearch-searchbox-focus-background: rgba(30,30,34);
+    }
+    /*--- 阅读模式弹窗变量（保持中性灰调，与浅色/深色模式风格统一）---*/
+    .theme-mode-read {
+      --docsearch-container-background: rgba(0,0,0,.4);
+      --docsearch-modal-background: rgb(245,245,213);
+      --docsearch-hit-background: rgba(236,236,204,.8);
+      --docsearch-hit-shadow: none;
+      --docsearch-footer-background: rgb(245,245,213);
+      --docsearch-text-color: #2c3e50;
+      --docsearch-muted-color: #8292a0;
+      --docsearch-searchbox-background: rgba(236,236,204,.8);
+      --docsearch-searchbox-focus-background: rgb(236,236,204);
+    }
+
+    /* 还原 DocSearch 内部 flex（Vdoing 用 span 选择器冲掉了） */
+    .DocSearch-Button-Container, .DocSearch-Button-Keys { display: flex !important; }
+    /* 隐藏快捷键提示（如 ⌘K） */
     .DocSearch-Button-Keys { display: none !important; }
+    /* 按钮悬停/聚焦时显示主题色边框 */
+    .DocSearch-Button:focus, .DocSearch-Button:hover { box-shadow: 0 0 0 1px ${themeColor} !important; }
     .DocSearch-Button-Placeholder { font-size: .9rem !important; }
+    /* 搜索图标缩小到 16px */
     .DocSearch-Search-Icon { width: 16px !important; height: 16px !important; }
+    /* 弹窗打开时保留页面滚动、取消右边距偏移，防止锚点页目录消失 */
     body.DocSearch--active { margin-right: 0 !important; overflow: visible !important; }
+    /* 搜索结果项背景使用主题变量 */
     .DocSearch-Hit a { background: var(--docsearch-hit-background) !important; }
     .DocSearch-Hit[aria-selected=true] a { background: ${themeColor} !important; }
+    /* 首次加载淡入动画（配合 head.js 的 defer 加载） */
     .DocSearch-Button { animation: docsearchFadeIn .4s ease both; }
     @keyframes docsearchFadeIn { from { opacity: 0; transform: translateY(-2px); } to { opacity: 1; transform: translateY(0); } }
     `
     document.head.appendChild(style)
 
-    // 放开父容器宽度限制（Vdoing JS 设的 inline max-width）
+    // Vdoing JS 会给 .links 设 inline max-width，导致搜索框被挤窄
+    // 用 MutationObserver 持续确保 max-width 被释放
     const links = this.$el.closest('.links')
     let observer = null
     if (links) {
