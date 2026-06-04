@@ -54,8 +54,10 @@ export default {
     .DocSearch-Button-Placeholder { font-size: .9rem !important; }
     /* 搜索图标缩小到 16px */
     .DocSearch-Search-Icon { width: 16px !important; height: 16px !important; }
-    /* 弹窗打开时保留页面滚动、取消右边距偏移，防止锚点页目录消失 */
-    body.DocSearch--active { margin-right: 0 !important; overflow: visible !important; }
+    /* 弹窗打开时取消右边距偏移
+       桌面端（≥1280px）保持 overflow:visible 防止右侧目录 sticky 失效 */
+    body.DocSearch--active { margin-right: 0 !important; }
+    @media (min-width: 1280px) { body.DocSearch--active { overflow: visible !important; } }
     /* 搜索结果项背景使用主题变量 */
     .DocSearch-Hit a { background: var(--docsearch-hit-background) !important; }
     .DocSearch-Hit[aria-selected=true] a { background: ${themeColor} !important; }
@@ -77,6 +79,9 @@ export default {
     }
     this._linksObserver = observer
 
+    // 监听 DocSearch 弹窗状态，锁住 html 滚动（移动端兼容）
+    this.initDocSearchObserver()
+
     // 立即尝试初始化，如果 docsearch 脚本还没加载则轮询等待
     this.initSearch()
   },
@@ -84,9 +89,25 @@ export default {
   beforeDestroy() {
     if (this._linksObserver) this._linksObserver.disconnect()
     if (this._searchTimer) clearInterval(this._searchTimer)
+    if (this._docSearchObserver) this._docSearchObserver.disconnect()
+    document.documentElement.style.overflow = ''
   },
 
   methods: {
+    // 移动端：DocSearch 弹窗打开时锁住 html 滚动（iOS Safari 只锁 body 无效）
+    initDocSearchObserver() {
+      if (typeof window === 'undefined') return
+      this._docSearchObserver = new MutationObserver(() => {
+        const isActive = document.body.classList.contains('DocSearch--active')
+        if (isActive && window.innerWidth < 1280) {
+          document.documentElement.style.overflow = 'hidden'
+        } else {
+          document.documentElement.style.overflow = ''
+        }
+      })
+      this._docSearchObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] })
+    },
+
     initSearch() {
       const start = () => {
         if (!this.options || !window.docsearch) return

@@ -81,5 +81,5 @@ new Crawler({
       ],
     },
   },
-  apiKey: "343ee456d272648faa7909636772563e",
+  apiKey: "YOUR_CRAWLER_API_KEY",
 });

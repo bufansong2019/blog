@@ -46,6 +46,8 @@ export default {
     this.initTwikoo();
   },
   beforeDestroy() {
+    if (this._loadTimeout) clearTimeout(this._loadTimeout);
+    if (this._styleTimer) clearTimeout(this._styleTimer);
     const el = document.getElementById('tcomment');
     if (el) el.innerHTML = '';
   },
@@ -54,7 +56,7 @@ export default {
       await this.$nextTick();
 
       let inited = false;
-      const timeout = setTimeout(() => {
+      this._loadTimeout = setTimeout(() => {
         if (!inited) {
           this.loading = false;
           const el = document.getElementById('tcomment');
@@ -67,7 +69,7 @@ export default {
       if (typeof window === 'undefined' || !window.twikoo) return;
 
       inited = true;
-      clearTimeout(timeout);
+      clearTimeout(this._loadTimeout);
 
       const commentPath = this.path || window.location.pathname.replace(/\/$/, '');
 
@@ -79,7 +81,7 @@ export default {
       });
 
       // 延迟注入主题色样式，确保 Twikoo 的 Element UI CSS 已加载
-      setTimeout(() => {
+      this._styleTimer = setTimeout(() => {
         if (document.getElementById('twikoo-theme-style')) return;
         const style = document.createElement('style');
         style.id = 'twikoo-theme-style';

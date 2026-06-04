@@ -177,8 +177,12 @@ body [class^="icon-"] {
   background-color: rgba(255,255,255,.1) !important;
 }
 
-/* 文章页底部收紧间距 */
+/* 文章页底部收紧间距（含归档页内层嵌套的 .theme-vdoing-wrapper） */
 .page .theme-vdoing-wrapper {
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+}
+.archives-page .theme-vdoing-wrapper {
   padding-bottom: 0 !important;
   margin-bottom: 0 !important;
 }
